@@ -9,9 +9,10 @@ The client that is used does not necessarily need to be the one defined in 'serv
 TODO:
 	* Use other forms of data other than just 3D pupil diameter.
 	* Finish Python version of the library.
-	* Decrease server-client synchronization error (currently ~10 milliseconds which is more than enough).
+	* Decrease server-client synchronization error (currently ~10 milliseconds which is more than enough and gives excellent results if the data points are not spaced at very high intervals, these can be removed with the 'erratics' argument in the 'pupil_epoch' function).
 	* Complete testing implementation.
 	* Complete viewer implementation.
+	* Implement LSL (Lab Streaming Layer) as the communication system between pupil labs data and other stimulation machines.
 	
 Feel free to mention any other features that should be added or are needed and let me know if you find any bugs by using the Github issues page. 
 
