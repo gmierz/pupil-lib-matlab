@@ -12,3 +12,7 @@ TODO:
 	* Decrease server-client synchronization error (currently ~10 milliseconds which is more than enough).
 	* Complete testing implementation.
 	* Complete viewer implementation.
+	
+Feel free to mention any other features that should be added or are needed and let me know if you find any bugs by using the Github issues page. 
+
+Also, feel free to contact me if there are any questions about the library.
