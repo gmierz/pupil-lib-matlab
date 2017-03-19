@@ -11,3 +11,4 @@ TODO:
 	* Finish Python version of the library.
 	* Decrease server-client synchronization error (currently ~10 milliseconds which is more than enough).
 	* Complete testing implementation.
+	* Complete viewer implementation.
