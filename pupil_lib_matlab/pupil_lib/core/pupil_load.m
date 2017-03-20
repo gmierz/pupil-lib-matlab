@@ -76,6 +76,7 @@ function PUPIL = pupil_load(test_dir, varargin)
         fclose(fid);
 
         PUPIL.markers.eventnames = C{1};
+        PUPIL.xdf = 0;
     else
         % Parse an XDF file into the pupil structure. The #parse_xdf#
         % function deals with errors when there is data missing.
@@ -88,11 +89,12 @@ function PUPIL = pupil_load(test_dir, varargin)
         eye0_struct = parse_xdf(xdf_file, 'Pupil Primitive Data - Eye 0');
         eye1_struct = parse_xdf(xdf_file, 'Pupil Primitive Data - Eye 1');
         
-        PUPIL.eye0.data = eye0_struct.time_series(1,:);
-        PUPIL.eye1.data = eye1_struct.time_series(1,:);
+        PUPIL.eye0.data = eye0_struct.time_series(1,:)';
+        PUPIL.eye1.data = eye1_struct.time_series(1,:)';
         
-        PUPIL.eye0.timestamps = eye0_struct.time_stamps;
-        PUPIL.eye1.timestamps = eye1_struct.time_stamps;        
+        PUPIL.eye0.timestamps = eye0_struct.time_stamps';
+        PUPIL.eye1.timestamps = eye1_struct.time_stamps';
+        PUPIL.xdf = 1;
     end
     
     PUPIL.merged = 0;
