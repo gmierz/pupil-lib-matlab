@@ -15,7 +15,7 @@ function PUPIL = pupil_load(test_dir, varargin)
 %       test_dir    -  The directory that contains the experiment and the
 %                      data needed.
 % OPTIONAL:
-%       (NONE)
+%       'load_xdf'  -  Load XDF data from an experiment using LSL.
 % 
 % OUTPUT:
 %       PUPIL       -  A data structure containing all the raw data and
@@ -44,26 +44,60 @@ function PUPIL = pupil_load(test_dir, varargin)
 % along with this program; if not, write to the Free Software
 % Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+    xdf_flag = 0;
+    filename = '';
     current_dir = pwd;
     cd(test_dir);
     
-    PUPIL.eye0.data = csvread('pupil_eye0_diams.csv');
-    PUPIL.eye0.timestamps = csvread('pupil_eye0_ts.csv');
-    PUPIL.eye0.srate = pupil_srate(PUPIL.eye0.data, PUPIL.eye0.timestamps);
+    if nargin > 1
+        for i = 1:2:length(varargin)
+            if strcmp(varargin{i}, 'load_xdf')    
+                xdf_flag = 1;
+                filename = varargin{i+1};
+            end
+        end
+    end
     
-    PUPIL.eye1.data = csvread('pupil_eye1_diams.csv');
-    PUPIL.eye1.timestamps = csvread('pupil_eye1_ts.csv');
-    PUPIL.eye1.srate = pupil_srate(PUPIL.eye1.data, PUPIL.eye1.timestamps);
     
-    PUPIL.markers.timestamps = csvread('markers_ts.csv');
-    PUPIL.merged = 0;
-    
-    fid = fopen('markers_evnames.csv','rt');
-    C = textscan(fid, '%s', 'Delimiter',',', 'HeaderLines',0, ...
-        'MultipleDelimsAsOne',true, 'CollectOutput',false);
-    fclose(fid);
+    if xdf_flag == 0
+        % Parse files from an old server version if we're not given an XDF 
+        % file.
+        PUPIL.eye0.data = csvread('pupil_eye0_diams.csv');
+        PUPIL.eye0.timestamps = csvread('pupil_eye0_ts.csv');
 
-    PUPIL.markers.eventnames = C{1};
+        PUPIL.eye1.data = csvread('pupil_eye1_diams.csv');
+        PUPIL.eye1.timestamps = csvread('pupil_eye1_ts.csv');
+
+        PUPIL.markers.timestamps = csvread('markers_ts.csv');
+
+        fid = fopen('markers_evnames.csv','rt');
+        C = textscan(fid, '%s', 'Delimiter',',', 'HeaderLines',0, ...
+            'MultipleDelimsAsOne',true, 'CollectOutput',false);
+        fclose(fid);
+
+        PUPIL.markers.eventnames = C{1};
+    else
+        % Parse an XDF file into the pupil structure. The #parse_xdf#
+        % function deals with errors when there is data missing.
+        xdf_file = load_xdf(filename);
+        marker_struct = parse_xdf(xdf_file, 'Markers');
+        
+        PUPIL.markers.eventnames = marker_struct.time_series;
+        PUPIL.markers.timestamps = marker_struct.time_stamps;
+        
+        eye0_struct = parse_xdf(xdf_file, 'Pupil Primitive Data - Eye 0');
+        eye1_struct = parse_xdf(xdf_file, 'Pupil Primitive Data - Eye 1');
+        
+        PUPIL.eye0.data = eye0_struct.time_series(1,:);
+        PUPIL.eye1.data = eye1_struct.time_series(1,:);
+        
+        PUPIL.eye0.timestamps = eye0_struct.time_stamps;
+        PUPIL.eye1.timestamps = eye1_struct.time_stamps;        
+    end
+    
+    PUPIL.merged = 0;
+    PUPIL.eye0.srate = pupil_srate(PUPIL.eye0.data, PUPIL.eye0.timestamps);
+    PUPIL.eye1.srate = pupil_srate(PUPIL.eye1.data, PUPIL.eye1.timestamps);
     
     cd(current_dir);
 end

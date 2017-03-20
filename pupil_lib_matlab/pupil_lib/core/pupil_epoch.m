@@ -182,15 +182,6 @@ function PUPIL_EPOCHED = pupil_epoch(PUPIL, trigs, trial_range, varargin)
         PUPIL_EPOCHED.eye1.epochs = trig_epochs.eye1;
     end
     
-    for i = 1:4
-       display(['trig ' int2str(i)]);
-       for j = 1:size(PUPIL_EPOCHED.eye0.epochs{1,i}.epochs,1)
-           tmp = size(PUPIL_EPOCHED.eye0.epochs{1,i}.epochs{j,1}.data);
-           display(tmp)
-       end
-    end
-    %pause(10);
-    
     % Resize all epochs to the same size as EEG epochs for easier
     % comparisons (i.e. to a sampling rate of 33Hz). 
     for k = (1+currepochnum):((trig_count-1)+currepochnum)
