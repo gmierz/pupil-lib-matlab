@@ -136,7 +136,9 @@ server_address = (server_name, 10001)
 print >> sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
 sock.listen(1)
-sock.settimeout(60)
+
+if os.name != 'nt':
+    sock.settimeout(60)
 
 # Initialize some variables.
 event = ''
@@ -205,6 +207,7 @@ while 1:
                 #     break
     finally:
         if timeout_flag:
+            print 'Timeout on the client end, saving what data we have.'
             time.sleep(10)
             requester.send('r')
             time.sleep(30)
