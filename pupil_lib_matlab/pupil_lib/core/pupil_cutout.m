@@ -152,12 +152,8 @@ function [data_seg, num_basepoints, num_trialpoints] = pupil_cutout(pupil_data, 
         % Swap out or append to the ends the approximated values.
         if zero_errb == 1 && base_ind1 > ind_base
             % Here, we append to the beginning
-            display('here')
-            size(data_seg.times)
             data_seg.data = [val_out_base data_seg.data']';
             data_seg.times = [pupil_bts_final data_seg.times']';
-            size(data_seg.times)
-            pause(1)
         else
             % Here, we replace the beginning
             data_seg.data(1) = val_out_base;
@@ -166,20 +162,14 @@ function [data_seg, num_basepoints, num_trialpoints] = pupil_cutout(pupil_data, 
         
         if zero_errt == 1 && trial_ind2 > ind_trial
             % Append to end
-            size(data_seg.data)
-            size(data_seg.times)
             data_seg.data = [data_seg.data' val_out_trial]';
             data_seg.times = [data_seg.times' pupil_tts_final]';
-            size(data_seg.data)
-            size(data_seg.times)
-            pause(1)
         else
             % Replace last value
             data_seg.data(end) = val_out_trial;
             data_seg.times(end) = pupil_tts_final;
         end
         display(['Final timespan: ' sprintf('%.20f',(data_seg.times(end)-data_seg.times(1)))]);
-        % pause(1)
     else
         %% TODO, reimplement what is in the negative section for this one.
         zero_baseline = 0;
@@ -274,12 +264,8 @@ function [data_seg, num_basepoints, num_trialpoints] = pupil_cutout(pupil_data, 
         % Swap out or append to the ends the approximated values.
         if zero_baseline == 0 && zero_errb == 1 && base_ind1 > ind_base
             % Here, we append to the beginning
-            display('here')
-            size(data_seg.times)
             data_seg.data = [val_out_base data_seg.data']';
             data_seg.times = [pupil_bts_final data_seg.times']';
-            size(data_seg.times)
-            pause(1)
         else
             % Here, we replace the beginning
             data_seg.data(1) = val_out_base;
@@ -288,13 +274,8 @@ function [data_seg, num_basepoints, num_trialpoints] = pupil_cutout(pupil_data, 
         
         if zero_errt == 1 && trial_ind2 > ind_trial
             % Append to end
-            size(data_seg.data)
-            size(data_seg.times)
             data_seg.data = [data_seg.data' val_out_trial]';
             data_seg.times = [data_seg.times' pupil_tts_final]';
-            size(data_seg.data)
-            size(data_seg.times)
-            pause(1)
         else
             % Replace last value
             data_seg.data(end) = val_out_trial;

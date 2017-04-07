@@ -201,11 +201,6 @@ function PUPIL_EPOCHED = pupil_epoch(PUPIL, trigs, trial_range, varargin)
             PUPIL_EPOCHED.eye1.epochs{1,k}.epochs{l,1}.times(2:end-1) = imresize(temp_ts1(2:end-1), [epochsize-2 1]);
         end
     end
-    
-    % If 'view' is set, display the epochs per trigger.
-    if view == 1
-        pupil_viewepochs(PUPIL_EPOCHED);
-    end
 
     % Post-processing the datasets.
     for k = (1+currepochnum):((trig_count-1)+currepochnum)
@@ -270,5 +265,10 @@ function PUPIL_EPOCHED = pupil_epoch(PUPIL, trigs, trial_range, varargin)
             PUPIL_EPOCHED.eye1.epochs{1,k}.epochmat_pc(:,:) = ...
                 pupil_datapercenteye(PUPIL_EPOCHED.eye1.epochs{1,k}.epochmat, PUPIL_EPOCHED.eye1.epochs{1,k}.rest_mean);
         end
+    end
+    
+    % If 'view' is set, display the epochs per trigger.
+    if view == 1
+        pupil_viewepochs(PUPIL_EPOCHED);
     end
 end

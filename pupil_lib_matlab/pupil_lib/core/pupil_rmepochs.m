@@ -42,7 +42,7 @@ function PUPIL_RMEPOCH = pupil_rmepochs(PUPIL, trig, epochs2rm)
     
     % Get a new list of indexes, with the given epoch indices removed.
     full_ind = 1:size(PUPIL.eye0.epochs{1,trig_ind}.epochs,1);
-    inds = setdiff(full_ind,epochs2rm)
+    inds = setdiff(full_ind,epochs2rm);
     PUPIL_RMEPOCH = PUPIL;
     PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochs = cell(length(inds),1);
     PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochs = cell(length(inds),1);
@@ -77,24 +77,17 @@ function PUPIL_RMEPOCH = pupil_rmepochs(PUPIL, trig, epochs2rm)
     PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.rest_mean = zeros(1,epoch_size);
     PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.rest_mean = zeros(1,epoch_size);
     
-    size(PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochmat_rmb)
-    size(PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochmat)
-    
     % Recalculate baseline removal plot.
     [PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochmat_rmb, ...
      PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.rest_mean] = pupil_rmbaselineeye(PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochmat, 1, PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.baseline_ind);
 
     [PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochmat_rmb, ... 
      PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.rest_mean] = pupil_rmbaselineeye(PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochmat, 1, PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.baseline_ind);
-    
-    size(PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochmat_rmb)
-    size(PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochmat)
+
  
     % Calculate the percent change graph.
     PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochmat_pc = ...
         pupil_datapercenteye(PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochmat, PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.rest_mean);
     PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochmat_pc = ...
         pupil_datapercenteye(PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochmat, PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.rest_mean);
-    size(PUPIL_RMEPOCH.eye0.epochs{1,trig_ind}.epochmat_rmb)
-    size(PUPIL_RMEPOCH.eye1.epochs{1,trig_ind}.epochmat)
 end
