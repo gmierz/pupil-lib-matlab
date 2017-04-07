@@ -1,4 +1,4 @@
-Pupil-Lib Data Segmentation Library
+# Pupil-Lib Data Segmentation Library
 
 Currently, this library can be used by running a Pupil Labs binocular eye tracker alongside the server and client implemented in the 'server_client' folder. At the same time, you can run a visual stimulus using Matlab and send event markers to the server from there using the client. These can later be used to segment the data obtained from the eye trackers into trials with the Pupil-Lib library.
 
@@ -8,7 +8,7 @@ The client that is used does not necessarily need to be the one defined in 'serv
 
 This library is now compatible with XDF data obtained from the use of the Pupil Labs LSL plugin and a marker outlet (from the 'server_client' folder) running in matlab (or others as needed). The XDF data can be loaded with the 'load_xdf' argument in the 'pupil_load' function.
 
-Dependencies:
+## Dependencies:
 	* Pupil Labs binocular eye tracker: https://pupil-labs.com/ .
 	* Lab Streaming Library (LSL): https://code.google.com/archive/p/labstreaminglayer/ . The version contained in 'liblsl-1.04.zip' in the downloads page is known to work with the Matlab marker inlet function.
 	* LabRecorder: ftp://sccn.ucsd.edu/pub/software/LSL/Apps/ . This version contained in 'LabRecorder-1.12c.zip' is known to work with the Pupil Labs eye tracker and produces compatible XDF files.
