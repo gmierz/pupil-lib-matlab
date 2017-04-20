@@ -90,7 +90,7 @@ function [pupil_bts_final, zero_errb, ind_base, base_ind1, base_ind2, error_fin_
         else
             zero_errb = 1;
         end
-    else
+    elseif curr_length < abs(opt_length)
         % Get the closest possible point with the lowest error.
         [ind_base, error_fin_base] = pupil_getclosestpoint(1, 0, pupil_ts, center_ind, num_basepoints, abs(opt_length));
 
@@ -107,6 +107,9 @@ function [pupil_bts_final, zero_errb, ind_base, base_ind1, base_ind2, error_fin_
         else
             zero_errb = 1;
         end
+    else % We have an exact measurement
+        zero_errb = 1;
+        ind_base = num_basepoints;
     end
 end
 

@@ -188,6 +188,15 @@ function PUPIL_EPOCHED = pupil_epoch(PUPIL, trigs, trial_range, varargin)
         for l = 1:size(PUPIL_EPOCHED.eye0.epochs{1,k}.epochs, 1)
             temp_ts0 = PUPIL_EPOCHED.eye0.epochs{1,k}.epochs{l,1}.times;
             temp_ts1 = PUPIL_EPOCHED.eye1.epochs{1,k}.epochs{l,1}.times;
+            
+            % Save the old data sets
+            PUPIL_EPOCHED.eye0.epochs{1,k}.epochs{l,1}.times_orig = temp_ts0;
+            PUPIL_EPOCHED.eye1.epochs{1,k}.epochs{l,1}.times_orig = temp_ts1;
+            PUPIL_EPOCHED.eye0.epochs{1,k}.epochs{l,1}.data_orig = ...
+                PUPIL_EPOCHED.eye0.epochs{1,k}.epochs{l,1}.data;
+            PUPIL_EPOCHED.eye1.epochs{1,k}.epochs{l,1}.data_orig = ...
+                PUPIL_EPOCHED.eye1.epochs{1,k}.epochs{l,1}.data;
+            
             PUPIL_EPOCHED.eye0.epochs{1,k}.epochs{l,1}.times = zeros(1,epochsize);
             PUPIL_EPOCHED.eye1.epochs{1,k}.epochs{l,1}.times = zeros(1,epochsize);
             
@@ -243,7 +252,7 @@ function PUPIL_EPOCHED = pupil_epoch(PUPIL, trigs, trial_range, varargin)
             
             % Determine index that corresponds to trial center (or baseline
             % beginning).
-            baseline_end = floor((size(PUPIL_EPOCHED.eye0.epochs{1,k}.epochmat,2)/total_time))*baseline_range;
+            baseline_end = floor((size(PUPIL_EPOCHED.eye0.epochs{1,k}.epochmat,2)/(total_time))*baseline_range);
             display('baseline_end:');
             display(baseline_end);
             

@@ -67,9 +67,11 @@ function epochs = pupil_epocheye(pupil_data, pupil_times, srate, proc_mtimes, tr
 
         % Get epoch data index
         using_ind = 1;
-        if error_prev <= error_curr % pick prev over curr
+        if error_prev < error_curr % pick prev over curr
             using_ind = pupil_count-1;
-        else % curr_ts has less error
+        elseif error_prev > error_curr % curr_ts has less error
+            using_ind = pupil_count;
+        else % No difference, pick the current error
             using_ind = pupil_count;
         end
 
