@@ -1,4 +1,4 @@
-Pupil-Lib Data Segmentation Library
+Pupil-Lib Epoch Extraction Library
 ===================================
 .. image:: https://zenodo.org/badge/85504419.svg
    :target: https://zenodo.org/badge/latestdoi/85504419
